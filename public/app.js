@@ -1,3 +1,9 @@
+const admin = require('firebase-admin');
+const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
 
 // DEfault configuration - Change these if you have a different STUN or TURN server.
