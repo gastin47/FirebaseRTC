@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "fir-rtc-89b99"
-  }
+    "default": "fir-rtc-89b99",
+    "z-chat": "z-chat-d9cf0"
+  },
+  "targets": {},
+  "etags": {}
 }
