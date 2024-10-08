@@ -1,0 +1,14 @@
+{
+    "name": "firebase-rtc",
+    "version": "1.0.0",
+    "description": "A simple WebRTC app using Firebase.",
+    "main": "app.js",
+    "scripts": {
+      "start": "firebase serve --only hosting",
+      "build": "echo 'Build script here'"
+    },
+    "dependencies": {
+      "firebase": "^9.0.0"
+    }
+  }
+  
