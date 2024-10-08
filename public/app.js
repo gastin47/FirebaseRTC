@@ -1,8 +1,9 @@
-const admin = require('firebase-admin');
-const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+var admin = require("firebase-admin");
+
+var serviceAccount = require("/etc/secrets/FIREBASE_CREDENTIALS");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(serviceAccount)
 });
 mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
 
