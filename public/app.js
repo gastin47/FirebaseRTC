@@ -38,12 +38,62 @@ async function createRoom() {
   registerPeerConnectionListeners();
 
   // Add code for creating a room here
+  const offer = await peerConnection.createOffer();
+  await peerConnection.setLocalDescription(offer);
   
+  const roomWithOffer = {
+      offer: {
+          type: offer.type,
+          sdp: offer.sdp
+      }
+  }
+  const roomRef = await db.collection('rooms').add(roomWithOffer);
+  const roomId = roomRef.id;
+  document.querySelector('#currentRoom').innerText = `Current room is ${roomId} - You are the caller!`
   // Code for creating room above
   
   localStream.getTracks().forEach(track => {
     peerConnection.addTrack(track, localStream);
   });
+  async function collectIceCandidates(roomRef, peerConnection, localName, remoteName) {
+    const candidatesCollection = roomRef.collection(localName);
+
+    peerConnection.addEventListener('icecandidate', event => {
+        if (event.candidate) {
+            const json = event.candidate.toJSON();
+            candidatesCollection.add(json);
+        }
+    });
+
+    roomRef.collection(remoteName).onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+            if (change.type === "added") {
+                const candidate = new RTCIceCandidate(change.doc.data());
+                peerConnection.addIceCandidate(candidate);
+            }
+        });
+    });
+}
+
+// Вызов функции collectIceCandidates
+collectIceCandidates(roomRef, peerConnection, 'callerCandidates', 'calleeCandidates');
+if (roomSnapshot.exists) {
+  const offer = roomSnapshot.data().offer;
+  await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+
+  const answer = await peerConnection.createAnswer();
+  await peerConnection.setLocalDescription(answer);
+
+  const roomWithAnswer = {
+      answer: {
+          type: answer.type,
+          sdp: answer.sdp
+      }
+  };
+  await roomRef.update(roomWithAnswer);
+
+  collectIceCandidates(roomRef, peerConnection, 'calleeCandidates', 'callerCandidates');
+}
 
   // Code for creating a room below
 
