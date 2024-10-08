@@ -4,11 +4,12 @@
     "description": "A simple WebRTC app using Firebase.",
     "main": "app.js",
     "scripts": {
-      "start": "firebase serve --only hosting",
-      "build": "echo 'Build script here'"
+        "start": "npx firebase serve --only hosting"
     },
     "dependencies": {
-      "firebase": "^9.0.0"
+        "firebase": "^9.0.0"
+    },
+    "devDependencies": {
+        "firebase-tools": "^13.21.0"
     }
-  }
-  
+}
