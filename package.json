@@ -1,15 +1,13 @@
 {
-    "name": "firebase-rtc",
-    "version": "1.0.0",
-    "description": "A simple WebRTC app using Firebase.",
-    "main": "app.js",
-    "scripts": {
-        "start": "npx firebase serve --only hosting"
-    },
-    "dependencies": {
-        "firebase": "^9.0.0"
-    },
-    "devDependencies": {
-        "firebase-tools": "^13.21.0"
-    }
+  "name": "firebase-rtc",
+  "version": "1.0.0",
+  "description": "A simple WebRTC app using Firebase.",
+  "main": "app.js",
+  "scripts": {
+    "deploy": "firebase deploy --token $FIREBASE_TOKEN"
+  },
+  "dependencies": {
+    "firebase": "^9.0.0",
+    "firebase-tools": "^12.0.0"
+  }
 }
